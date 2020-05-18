@@ -3,7 +3,6 @@ var paduserlist = require('ep_etherpad-lite/static/js/pad_userlist').paduserlist
 
 exports.postAceInit = function (hook_name, args, cb) {
 	var brightness = clientVars.brightness;
-
 	/**
 	 * remove farbtastic
 	 */
@@ -14,8 +13,6 @@ exports.postAceInit = function (hook_name, args, cb) {
 	};
 	$("#mycolorpicker").remove();
 	$("#myuser").prepend( "<div id='colorpicker'></div>" );
-
-
 	/**
 	 * bind brightColorPicker plugin
 	 */
@@ -43,8 +40,6 @@ exports.postAceInit = function (hook_name, args, cb) {
 			paduserlist.renderMyUserInfo();
 		}
 	});
-
-
 	/**
 	 * check chosen
 	 */
@@ -61,9 +56,6 @@ exports.postAceInit = function (hook_name, args, cb) {
 		// add "selected" class
 		$(this).addClass('selected');
 	});
-
-
-
 	/**
 	 * toggle (open / close)
 	 */
@@ -82,11 +74,4 @@ exports.postAceInit = function (hook_name, args, cb) {
     $(".brightColorPicker-colorPanel").append(cancelButton);
 
 
-
-
 };
-
-
-
-
-
