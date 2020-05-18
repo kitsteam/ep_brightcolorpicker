@@ -1,25 +1,28 @@
 var $ = require('ep_etherpad-lite/static/js/rjquery').$; // use jQuery
+var paduserlist = require('ep_etherpad-lite/static/js/pad_userlist').paduserlist;
 
 exports.postAceInit = function (hook_name, args, cb) {
 	var brightness = clientVars.brightness;
-	
+
 	/**
 	 * remove farbtastic
 	 */
-	// delete $.fn.farbtastic; // doesn't work
-	// very dirty
-	// TODO: improve the way to remove farbtastic
+	$.farbtastic = $.fn.farbtastic = function () {
+		return {
+			"setColor": function () {}
+		}
+	};
 	$("#mycolorpicker").remove();
 	$("#myuser").prepend( "<div id='colorpicker'></div>" );
-	
-	
+
+
 	/**
 	 * bind brightColorPicker plugin
-	 */    
+	 */
 	$('#colorpicker').brightColorPicker({
 		'brightness' : brightness,
 		'callback' : function (color) {
-			
+
 			// copied from pad_userlist.js
 			var newColor = color;
 		    var parts = newColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -32,24 +35,16 @@ exports.postAceInit = function (hook_name, args, cb) {
 		      }
 		      var newColor = "#" +parts.join(''); // "0070ff"
 		    }
-		    
+
 			pad.notifyChangeColor(newColor);
-	        pad.myUserInfo.globalUserColor = newColor;
-	        
-			// paduserlist.renderMyUserInfo();
-			// doesn't work
-			// dirty: copied from paduserlist.renderMyUserInfo()
-			$("#myswatch").css({'background-color': color});
-			if (browser.msie && parseInt(browser.version) <= 8) {
-				$("li[data-key=showusers] > a").css({'box-shadow': 'inset 0 0 30px ' + color,'background-color': color});
-		    }
-		    else {
-		       $("li[data-key=showusers] > a").css({'box-shadow': 'inset 0 0 30px ' + color});
-		    }
+			pad.myUserInfo.globalUserColor = newColor;
+			paduserlist.setMyUserInfo(pad.myUserInfo);
+
+			paduserlist.renderMyUserInfo();
 		}
 	});
-	
-	
+
+
 	/**
 	 * check chosen
 	 */
@@ -57,26 +52,26 @@ exports.postAceInit = function (hook_name, args, cb) {
 	$(".brightColorPicker-colorPalette > div").filter(function(){
 	    return $(this).css('background-color') === pad.myUserInfo.colorId;
 	}).addClass('selected');
-	
+
 	// change on click
 	$('.brightColorPicker-colorChoice').click( function (e){
 		// remove "selected" classes
 		$(".brightColorPicker-colorPalette > div").removeClass('selected');
-		
+
 		// add "selected" class
 		$(this).addClass('selected');
 	});
-	
-	
-	
+
+
+
 	/**
 	 * toggle (open / close)
 	 */
 	$("#myswatch").click(function(){
 		$('#colorpicker').brightColorPicker('toggle');
 	});
-	
-	
+
+
 	/**
 	 * add cancel button
 	 */
@@ -86,9 +81,12 @@ exports.postAceInit = function (hook_name, args, cb) {
     });
     $(".brightColorPicker-colorPanel").append(cancelButton);
 
-    
 
-	
+
+
 };
+
+
+
 
 
