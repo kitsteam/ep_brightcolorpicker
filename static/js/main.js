@@ -13,6 +13,7 @@ exports.postAceInit = function (hook_name, args, cb) {
 	};
 	$("#mycolorpicker").remove();
 	$("#myuser").prepend( "<div id='colorpicker'></div>" );
+	$('#myswatchbox').unbind('click'); // removes click handler for farbtastic
 	/**
 	 * bind brightColorPicker plugin
 	 */
