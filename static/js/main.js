@@ -19,7 +19,6 @@ exports.postAceInit = function (hook_name, args, cb) {
 	$('#colorpicker').brightColorPicker({
 		'brightness' : brightness,
 		'callback' : function (color) {
-
 			// copied from pad_userlist.js
 			var newColor = color;
 		    var parts = newColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -32,7 +31,6 @@ exports.postAceInit = function (hook_name, args, cb) {
 		      }
 		      var newColor = "#" +parts.join(''); // "0070ff"
 		    }
-
 			pad.notifyChangeColor(newColor);
 			pad.myUserInfo.globalUserColor = newColor;
 			paduserlist.setMyUserInfo(pad.myUserInfo);
@@ -40,6 +38,8 @@ exports.postAceInit = function (hook_name, args, cb) {
 			paduserlist.renderMyUserInfo();
 		}
 	});
+
+
 	/**
 	 * check chosen
 	 */
@@ -56,6 +56,9 @@ exports.postAceInit = function (hook_name, args, cb) {
 		// add "selected" class
 		$(this).addClass('selected');
 	});
+
+
+
 	/**
 	 * toggle (open / close)
 	 */
@@ -72,6 +75,8 @@ exports.postAceInit = function (hook_name, args, cb) {
     	$('#colorpicker').brightColorPicker('hide');
     });
     $(".brightColorPicker-colorPanel").append(cancelButton);
+
+
 
 
 };

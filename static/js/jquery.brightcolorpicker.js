@@ -5,8 +5,10 @@
  * Date: 11th Dec 2011
  * @author Burke Mamlin
  * @version 1.0
- * 
+ *
  * modded for ep_brightcolorpicker
+ *
+ * modded again for ep_brightcolorpicker by falkirks 2020
  */
 
 (function($) {
@@ -20,7 +22,7 @@
     function selectColor(event)
     {
         var target = $(event.target).parents('.brightColorPicker-colorPanel');
-        target.hide();
+        $("#colorpicker").removeClass('popup-show');
         target.data('brightColorPicker').callback(target.find('.brightColorPicker-chosenColor').css('background-color'));
         event.stopPropagation();
     }
@@ -103,19 +105,19 @@
 
                 var settings = $.extend({ 'brightness':0.2}, options);
 
-                var panel = $("<div class='brightColorPicker-colorPanel'></div>");
+                var panel = $("<div class='brightColorPicker-colorPanel popup-content'></div>");
                 panel.data('brightColorPicker', { 'callback' : callback });
                 var closer = $("<a class='brightColorPicker-closeDialog' title='Close'></a>");
                 closer.click(function(event) {
-                    $(event.target).parents('.brightColorPicker-colorPanel').hide();
+                    $('#colorpicker').removeClass('popup-show');
                 });
                 panel.append(closer);
                 var palette = $("<div class='brightColorPicker-colorPalette'></div>");
                 panel.append(palette);
                 panel.append("<div class='brightColorPicker-chosenColor'></div>");
                 $this.append(panel);
-                
-                var columns = clientVars.columns;               
+
+                var columns = clientVars.columns;
                 var amount = columns*5;
                 var i;
                 for (i = 0; i < amount; i++)
@@ -123,44 +125,49 @@
                     var rgb = hsvToRgb(i * (360/amount), clientVars.brightness, 1);
                     var div = $("<div></div>").addClass('brightColorPicker-colorChoice')
                         .css('background-color', rgb).hover(updateColor).click(selectColor);
-                    if (i > 0 && i % columns === 0) 
+                    if (i > 0 && i % columns === 0)
                     {
                         div.addClass('newLine');
                     }
                     palette.append(div);
                 }
-                
+
                 // panel width
-                $(".brightColorPicker-colorPalette, .brightColorPicker-colorPanel").css("width", columns*26+"px");
-                
+                $(".brightColorPicker-colorPalette").css("width", columns*26+"px");
+
                 // picker left offset
-                $("#colorpicker").css("left", "-"+(20+columns*26)+"px");
-                
+                var left = -(20+columns*26);
+                if(left + $("#colorpicker").position().left < 0){
+                    console.log("oh no");
+                }
+                //$("#colorpicker").css("left", left+"px");
+                $("#colorpicker").addClass("popup toolbar-popup ep_brightcolorpicker-popup");
+
                 // border-radius
                 $(".brightColorPicker-colorPalette .brightColorPicker-colorChoice:nth-child("+columns+")")
-                	.css("border-top-right-radius", "3px");
+                    .css("border-top-right-radius", "3px");
                 $(".brightColorPicker-colorPalette .brightColorPicker-colorChoice:nth-child("+(columns*(columns-1)+1)+")")
-            		.css("border-bottom-left-radius", "3px");
-                
+                    .css("border-bottom-left-radius", "3px");
+
             });
 
         },
         show: function()
         {
             return this.each(function() {
-                $(this).find('.brightColorPicker-colorPanel').show();
+                $("#colorpicker").addClass('popup-show');
             });
         },
         hide: function()
         {
             return this.each(function() {
-                $(this).find('.brightColorPicker-colorPanel').hide();
+                $("#colorpicker").removeClass('popup-show');
             });
         },
         toggle: function()
         {
             return this.each(function() {
-                $(this).find('.brightColorPicker-colorPanel').toggle();
+                $("#colorpicker").toggleClass('popup-show');
             });
         }
     };
