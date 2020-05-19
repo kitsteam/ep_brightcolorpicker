@@ -135,12 +135,6 @@
                 // panel width
                 $(".brightColorPicker-colorPalette").css("width", columns*26+"px");
 
-                // picker left offset
-                var left = -(20+columns*26);
-                if(left + $("#colorpicker").position().left < 0){
-                    console.log("oh no");
-                }
-                //$("#colorpicker").css("left", left+"px");
                 $("#colorpicker").addClass("popup toolbar-popup ep_brightcolorpicker-popup");
 
                 // border-radius
