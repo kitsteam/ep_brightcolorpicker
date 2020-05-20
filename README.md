@@ -1,5 +1,3 @@
-**Note: Development was discontinued in 2015.**
-
 ep_brightcolorpicker
 =======
 
@@ -7,6 +5,11 @@ Etherpad-Plugin that replaces the build-in farbtastic color picker with [jQuery 
 
 * customizable brightness level (HSV/HSB color model)
 * customizable amount of color columns (results in color matrix of *value x 5*)
+
+## Installing 
+```
+npm install git+https://github.com/falkirks/ep_brightcolorpicker.git
+```
 
 ![view ep_brightcolorpicker in action](https://raw.githubusercontent.com/gulaschskanone/ep_brightcolorpicker/master/static/image/ep_brightcolorpicker.png)
 
