@@ -5,15 +5,12 @@
 	min-width: 0px;
 }
 
-@media (max-width: 1000px) {
-	#colorpicker.popup {
-		top: auto;
-		bottom: 0;
-		left: auto !important;
-		right: 0 !important;
-	}
+.mobile-layout #colorpicker.popup {
+  top: auto;
+  bottom: 0;
+  left: auto !important;
+  right: 0 !important;
 }
-
 
 .brightColorPicker-colorChoice {
     cursor: pointer;
